@@ -16,17 +16,25 @@
 
 package com.example.android.testing.notes.statistics;
 
+import com.example.android.testing.notes.Injection;
 import com.example.android.testing.notes.R;
+import com.example.android.testing.notes.data.Note;
+import com.example.android.testing.notes.data.NotesRepository;
+import com.example.android.testing.notes.notes.NotesFragment;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Show statistics for notes. At this point this is just a dummy implementation.
  */
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends AppCompatActivity implements NotesRepository.LoadNotesCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +55,43 @@ public class StatisticsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        NotesRepository repository = Injection.provideNotesRepository();
+        repository.getNotes(this);
+    }
+
+    @Override
+    public void onNotesLoaded(List<Note> notes) {
+        if (notes.size() == 0)
+            return;
+
+        findViewById(R.id.no_statistics).setVisibility(View.GONE);
+        findViewById(R.id.statistics_layout).setVisibility(View.VISIBLE);
+        TextView tv = (TextView) findViewById(R.id.total_notes);
+        tv.setText(getString(R.string.total_notes, notes.size()));
+
+        int totalWords = 0;
+
+        for (Note note : notes)
+        {
+            if (note.getTitle() != null)
+                totalWords += note.getTitle().split("\\s+").length;
+
+            if (note.getDescription() != null)
+                totalWords += note.getDescription().split("\\s+").length;
+        }
+
+        tv = (TextView) findViewById(R.id.total_words);
+        tv.setText(getString(R.string.total_words, totalWords));
+
+        float averageWords = (float) totalWords / (float) notes.size();
+
+        tv = (TextView) findViewById(R.id.average_words);
+        tv.setText(getString(R.string.average_words, averageWords));
     }
 }

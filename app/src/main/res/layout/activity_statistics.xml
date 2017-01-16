@@ -22,7 +22,6 @@
         android:layout_height="match_parent"
         tools:context=".StatisticsActivity">
 
-
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -49,4 +48,25 @@
             android:layout_marginTop="12dp"
             android:text="@string/no_statistics_available"/>
 
+    <LinearLayout
+        android:id="@+id/statistics_layout"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/no_statistics_placeholder">
+        <TextView
+            android:id="@+id/total_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/total_words"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/average_words"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </RelativeLayout>

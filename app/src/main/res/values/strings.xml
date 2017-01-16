@@ -29,5 +29,7 @@
     <string name="no_statistics_available">No statistics</string>
     <string name="no_data">No data</string>
     <string name="loading">LOADING</string>
-
+    <string name="total_notes">Total notes: %d</string>
+    <string name="total_words">Total words: %d</string>
+    <string name="average_words">Average words/note: %.2f</string>
 </resources>
