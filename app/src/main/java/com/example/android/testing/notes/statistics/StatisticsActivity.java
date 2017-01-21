@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -79,10 +80,10 @@ public class StatisticsActivity extends AppCompatActivity implements NotesReposi
 
         for (Note note : notes)
         {
-            if (note.getTitle() != null)
+            if (!TextUtils.isEmpty(note.getTitle()))
                 totalWords += note.getTitle().split("\\s+").length;
 
-            if (note.getDescription() != null)
+            if (!TextUtils.isEmpty(note.getDescription()))
                 totalWords += note.getDescription().split("\\s+").length;
         }
 
