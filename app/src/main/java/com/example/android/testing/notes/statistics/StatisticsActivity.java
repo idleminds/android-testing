@@ -20,7 +20,6 @@ import com.example.android.testing.notes.Injection;
 import com.example.android.testing.notes.R;
 import com.example.android.testing.notes.data.Note;
 import com.example.android.testing.notes.data.NotesRepository;
-import com.example.android.testing.notes.notes.NotesFragment;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -47,9 +46,11 @@ public class StatisticsActivity extends AppCompatActivity implements NotesReposi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.statistics_title);
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setDisplayShowHomeEnabled(true);
+        if (ab != null) {
+            ab.setTitle(R.string.statistics_title);
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setDisplayShowHomeEnabled(true);
+        }
     }
 
     @Override
@@ -71,10 +72,18 @@ public class StatisticsActivity extends AppCompatActivity implements NotesReposi
         if (notes.size() == 0)
             return;
 
-        findViewById(R.id.no_statistics).setVisibility(View.GONE);
-        findViewById(R.id.statistics_layout).setVisibility(View.VISIBLE);
+        View v;
+        v = findViewById(R.id.no_statistics);
+        if (v != null)
+            v.setVisibility(View.GONE);
+
+        v = findViewById(R.id.statistics_layout);
+        if (v != null)
+            v.setVisibility(View.VISIBLE);
+
         TextView tv = (TextView) findViewById(R.id.total_notes);
-        tv.setText(getString(R.string.total_notes, notes.size()));
+        if (tv != null)
+            tv.setText(getString(R.string.total_notes, notes.size()));
 
         int totalWords = 0;
 
@@ -88,11 +97,13 @@ public class StatisticsActivity extends AppCompatActivity implements NotesReposi
         }
 
         tv = (TextView) findViewById(R.id.total_words);
-        tv.setText(getString(R.string.total_words, totalWords));
+        if (tv != null)
+            tv.setText(getString(R.string.total_words, totalWords));
 
         float averageWords = (float) totalWords / (float) notes.size();
 
         tv = (TextView) findViewById(R.id.average_words);
-        tv.setText(getString(R.string.average_words, averageWords));
+        if (tv != null)
+            tv.setText(getString(R.string.average_words, averageWords));
     }
 }
